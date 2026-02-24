@@ -12,7 +12,7 @@ export const verifyRefreshToken = (token) => jwt.verify(token, env.refreshTokenS
 
 const baseCookieOptions = {
   httpOnly: true,
-  sameSite: 'lax',
+  sameSite: env.nodeEnv === 'production' ? 'none' : 'lax',
   secure: env.nodeEnv === 'production'
 };
 

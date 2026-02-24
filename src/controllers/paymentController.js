@@ -23,12 +23,14 @@ export const createPaymentIntent = async (req, res) => {
     return res.status(400).json({ message: 'Invalid amount. Minimum is $0.50.' });
   }
 
+  const clientId = req.user?._id ? req.user._id.toString() : '';
+
   const intent = await stripe.paymentIntents.create({
     amount,
     currency: 'usd',
     automatic_payment_methods: { enabled: true },
     metadata: {
-      clientId: req.user._id.toString(),
+      clientId,
       listingId: String(listingId),
       packageId: String(packageId),
       eventDate: String(eventDate),
